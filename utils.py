@@ -1,6 +1,7 @@
 import csv
 import json
 
+
 CSV_PATH_FOR_ADS = "datasets/ads.csv"
 JSON_PATH_FOR_ADS = "ads.json"
 MODEL_FOR_ADS = "ads.ad"
@@ -10,12 +11,14 @@ JSON_PATH_FOR_CAT = "categories.json"
 MODEL_FOR_CAT = "ads.category"
 
 
-def csv_to_json_for_ads():
+def csv_to_json_for_ads() -> None:
 
+    """Open csv"""
     with open(CSV_PATH_FOR_ADS, encoding='utf-8') as csv_file_handler:
         csv_reader = csv.DictReader(csv_file_handler)
         result = []
 
+        """Change csv file"""
         for row in csv_reader:
 
             to_add = {"model": MODEL_FOR_ADS, "pk": int(row['Id'])}
@@ -29,15 +32,19 @@ def csv_to_json_for_ads():
 
             result.append(to_add)
 
+    """Write in json"""
     with open(JSON_PATH_FOR_ADS, 'w', encoding='utf-8') as json_file_handler:
         json_file_handler.write(json.dumps(result, indent=4, ensure_ascii=False))
 
 
-def csv_to_json_for_categories():
+def csv_to_json_for_categories() -> None:
 
+    """Open csv"""
     with open(CSV_PATH_FOR_CAT, encoding='utf-8') as csv_file_handler:
         csv_reader = csv.DictReader(csv_file_handler)
         result = []
+
+        """Change csv file"""
         for row in csv_reader:
 
             to_add = {"model": JSON_PATH_FOR_CAT, "pk": int(row['id'])}
@@ -46,6 +53,7 @@ def csv_to_json_for_categories():
 
             result.append(to_add)
 
+    """Write in json"""
     with open(MODEL_FOR_CAT, 'w', encoding='utf-8') as json_file_handler:
         json_file_handler.write(json.dumps(result, indent=4, ensure_ascii=False))
 

@@ -10,14 +10,14 @@ from django.views.generic import DetailView
 from ads.models import Ad, Category
 
 
-def index(request):
+def index(request):                                      # Root view
     return JsonResponse({"status": "ok"}, status=200)
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-class AdView(View):
+class AdView(View):                                     # Ads view
 
-    def get(self, request):
+    def get(self, request):                                # Get all ads
         ads = Ad.objects.all()
 
         response = []
@@ -31,7 +31,7 @@ class AdView(View):
 
         return JsonResponse(response, safe=False, json_dumps_params={'ensure_ascii': False}, status=200)
 
-    def post(self, request):
+    def post(self, request):                                             # Post method for ad
         ad_data = json.loads(request.body)
 
         ad = Ad()
@@ -60,7 +60,7 @@ class AdView(View):
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-class AdDetailView(DetailView):
+class AdDetailView(DetailView):                             # Get one ad
     model = Ad
 
     def get(self, request, *args, **kwargs):
@@ -79,9 +79,9 @@ class AdDetailView(DetailView):
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-class CategoryView(View):
+class CategoryView(View):                               # Categories view
 
-    def get(self, request):
+    def get(self, request):                                 # Get all categories
         categories = Category.objects.all()
 
         response = []
@@ -93,7 +93,7 @@ class CategoryView(View):
 
         return JsonResponse(response, safe=False, json_dumps_params={'ensure_ascii': False}, status=200)
 
-    def post(self, request):
+    def post(self, request):                                # Post method for category
         category_data = json.loads(request.body)
         category = Category()
 
@@ -113,7 +113,7 @@ class CategoryView(View):
 
 
 @method_decorator(csrf_exempt, name="dispatch")
-class CategoryDetailView(DetailView):
+class CategoryDetailView(DetailView):                    # Get on category
     model = Category
 
     def get(self, request, *args, **kwargs):
@@ -124,4 +124,3 @@ class CategoryDetailView(DetailView):
             "id": category.id,
             "name": category.name,
         }, safe=False, json_dumps_params={'ensure_ascii': False})
-
